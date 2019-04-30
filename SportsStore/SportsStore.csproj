@@ -7,9 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\images\**" />
+    <Compile Remove="wwwroot\styles\**" />
+    <Content Remove="wwwroot\images\**" />
+    <Content Remove="wwwroot\styles\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
+    <EmbeddedResource Remove="wwwroot\styles\**" />
+    <None Remove="wwwroot\images\**" />
+    <None Remove="wwwroot\styles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="wwwroot\styles\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
