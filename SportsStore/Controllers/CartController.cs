@@ -14,12 +14,12 @@ namespace SportsStore.Controllers {
             repository = repo;
         }
 
-        public ViewResult Index(string returnUrl) {
-            return View(new CartIndexViewModel {
-                Cart = GetCart(),
-                ReturnUrl = returnUrl
-            });
-        }
+        //public ViewResult Index(string returnUrl) {
+        //    return View(new CartIndexViewModel {
+        //        Cart = GetCart(),
+        //        ReturnUrl = returnUrl
+        //    });
+        //}
 
         public RedirectToActionResult AddToCart(int productId, string returnUrl) {
             Product product = repository.Products
