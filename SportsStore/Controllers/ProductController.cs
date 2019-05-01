@@ -15,24 +15,29 @@ namespace SportsStore.Controllers
         {
             ProductsListViewModel productsListViewModel = new ProductsListViewModel
             {
-                Products = repository.Products
-                    .Where(p => p.Category == null || p.Category == category)
-                    .OrderBy(p => p.ProductID)
-                    .Skip((productPage - 1) * PageSize)
-                    .Take(PageSize),
-
                 PagingInfo = new PagingInfo
                 {
-
                     CurrentPage = productPage,
                     ItemsPerPage = PageSize,
-                    TotalItems = category == null 
-                    ? repository.Products.Count()
-                    : repository.Products.Count(e => e.Category == category)
+                    TotalItems = category == null
+                        ? repository.Products.Count()
+                        : repository.Products.Count(e => e.Category == category)
                 },
 
                 CurrentCategory = category
             };
+
+            if (category == null)
+                productsListViewModel.Products = repository.Products
+                    .OrderBy(p => p.ProductID)
+                    .Skip((productPage - 1) * PageSize)
+                    .Take(PageSize);
+            else
+                productsListViewModel.Products = repository.Products
+                    .Where(p => p.Category == category)
+                    .OrderBy(p => p.ProductID)
+                    .Skip((productPage - 1) * PageSize)
+                    .Take(PageSize);
 
 
             return View(productsListViewModel);
