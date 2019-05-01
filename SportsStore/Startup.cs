@@ -24,6 +24,9 @@ namespace SportsStore
 
             //"Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;Trusted_Connection=True;MultipleActiveResultSets=true"
 
+            services.AddScoped<Cart>(SessionCart.GetCart);
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             //services.AddTransient<IProductRepository, FakeProductRepository>();
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
