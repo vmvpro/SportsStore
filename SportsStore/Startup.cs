@@ -79,6 +79,8 @@ namespace SportsStore
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 
+            app.UseSession();
+
             SeedData.EnsurePopulated(app);
 
             //if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
