@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace SportsStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;Trusted_Connection=True;MultipleActiveResultSets=true"));
+                options.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SportsStore_;Trusted_Connection=True;MultipleActiveResultSets=true"));
             //options.UseSqlServer(Configuration["Data:SportStoreProducts:ConnectionString"]));
 
             //"Server=(localdb)\\MSSQLLocalDB;Database=SportsStore;Trusted_Connection=True;MultipleActiveResultSets=true"
@@ -28,7 +29,14 @@ namespace SportsStore
             services.AddMvc();
 
             services.AddMemoryCache();
+            //services.AddSession(option => option.Cookie.Build(new DefaultHttpContext(){}));
+
             services.AddSession();
+
+            //services.Configure<IISOptions>(options =>
+            //{
+            //    options.AutomaticAuthentication = false;
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +57,8 @@ namespace SportsStore
             // Этот расширяющий метод включает по,одержку для обслу­
             // живания статического содержимого из папки wwwroot
             app.UseStaticFiles();
+
+            app.UseSession();
 
             // Этот расширяющий метод включает инфраструктуру
             // ASP.NEТ Core MVC
@@ -79,7 +89,7 @@ namespace SportsStore
                 routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
             });
 
-            app.UseSession();
+            
 
             SeedData.EnsurePopulated(app);
 
