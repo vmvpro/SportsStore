@@ -1,21 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SportsStore.Models {
-
-    public class Cart {
+namespace SportsStore.Models
+{
+    public class Cart
+    {
         private List<CartLine> lineCollection = new List<CartLine>();
 
-        public virtual void AddItem(Product product, int quantity) {
+        public virtual void AddItem(Product product, int quantity)
+        {
             CartLine line = lineCollection
-                .FirstOrDefault(p => p.Product.ProductID == product.ProductID);
+                .Where(p => p.Product.ProductID == product.ProductID)
+                .FirstOrDefault();
 
-            if (line == null) {
-                lineCollection.Add(new CartLine {
+            if (line == null)
+            {
+                lineCollection.Add(new CartLine
+                {
                     Product = product,
                     Quantity = quantity
                 });
-            } else {
+            }
+            else
+            {
                 line.Quantity += quantity;
             }
         }
@@ -31,7 +38,8 @@ namespace SportsStore.Models {
         public virtual IEnumerable<CartLine> Lines => lineCollection;
     }
 
-    public class CartLine {
+    public class CartLine
+    {
         public int CartLineID { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
